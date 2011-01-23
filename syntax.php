@@ -37,12 +37,13 @@ class syntax_plugin_bbs extends DokuWiki_Syntax_Plugin {
         if($format == 'xhtml'){
             $data = trim( $renderer->_xmlEntities($data), "\n");
             $data = $this->_parse_bbs($data);
-            $data = "<pre class=\"bbs\">\n" . $data . "\n</pre>";
-            $renderer->doc .= $data;
+            $renderer->doc .= "<pre class=\"bbs\">".DOKU_LF;
+            $renderer->doc .= $data.DOKU_LF;
+            $renderer->doc .= "</pre>".DOKU_LF;
             return true;
         }else if($format == 'metadata'){
             $data = $this->_parse_bbs_metadata($data);
-            $renderer->doc .= $data;
+            $renderer->doc .= $data.DOKU_LF;
             return true;
         }
         return false;
