@@ -40,6 +40,10 @@ class syntax_plugin_bbs extends DokuWiki_Syntax_Plugin {
             $data = "<pre class=\"bbs\">\n" . $data . "\n</pre>";
             $renderer->doc .= $data;
             return true;
+        }else if($format == 'metadata'){
+            $data = $this->_parse_bbs_metadata($data);
+            $renderer->doc .= $data;
+            return true;
         }
         return false;
     }
@@ -56,6 +60,15 @@ class syntax_plugin_bbs extends DokuWiki_Syntax_Plugin {
         $s = preg_replace_callback( "/&#27;\[([0-9;]*)(.)/", array($this,"_bbs_parse_tag"), $s );
         // Links
         $s = preg_replace_callback( "/(https?|ftp|telnet):\/\/(?:<.*?>|.)*?(?= |\n|$)/", array($this,"_bbs_parse_link"), $s );
+        return $s;
+    }
+    
+    function _parse_bbs_metadata($s) {
+        $s = preg_replace( "/\x1B/", '&#27;', $s);
+        // UAO to unicode
+        $s = preg_replace_callback( "/[\x{E024}-\x{F848}]/u", array($this,"_bbs_uao_to_unicode"), $s);
+        // Control codes
+        $s = preg_replace( "/&#27;\[([0-9;]*)(.)/", "", $s );
         return $s;
     }
 
