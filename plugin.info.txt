@@ -1,0 +1,6 @@
+author Danny Lin
+email  danny0838[at]pchome[dot]com[dot]tw
+date   2011-01-23
+name   BBS
+desc   <bbs> tag that creates a block for BBS text.
+url    http://www.dokuwiki.org/plugin:bbs
